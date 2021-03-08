@@ -841,10 +841,7 @@ class Opentender extends CI_Controller
 			$this->db->update('lelang_rescrap', $log_data);
 		}
 
-		echo "<pre>";
-		print_r ($result_data);
-		echo "</pre>";
-
+		$this->output->set_content_type('application/json')->set_output(json_encode($result_data));
 	}
 }
 
