@@ -828,6 +828,7 @@ class Opentender extends CI_Controller
 				$result_data['pemenang']           = $this->opentender_lib->get_tender_data($value->link_pemenang, $header, "//tr/td");
 				$result_data['pemenangberkontrak'] = $this->opentender_lib->get_tender_data($value->link_pemenangberkontrak, $header, "//tr/td");
 				$result_data['scrapped']           = date('Y-m-d H:i:s');
+				$result_data['tahun']              = $year;
 				
 				$time_end = microtime(true);
 				$result_data['execution_time'] = $time_end - $time_start;
