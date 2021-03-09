@@ -844,7 +844,7 @@ class Opentender extends CI_Controller
 			$log_data['execution_time'] = $time_end - $time_start;
 
 			$this->db->where('kd_lelang', $value->kd_lelang);
-			$this->db->update('lelang_rescrap', $log_data);
+			$this->db->update('lelang_rescrap_'.$year, $log_data);
 		}
 
 		$this->output->set_content_type('application/json')->set_output(json_encode($result_data));
