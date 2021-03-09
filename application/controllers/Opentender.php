@@ -803,11 +803,13 @@ class Opentender extends CI_Controller
 
 	public function rescrap_new()
 	{
+		$num = $this->input->get('num');
+		$year = $this->input->get('year');
+
 		$this->db->select('kd_lelang, link_pengumumanlelang, link_pemenang, link_pemenangberkontrak');
-		$this->db->where('tahun_pengumuman', '2015');
 		$this->db->where('link_pengumumanlelang IS NOT NULL');
 		$this->db->where('link_http_code IS NULL');
-		$list_url = $this->db->get('lelang_rescrap', 1000)->result();
+		$list_url = $this->db->get('lelang_rescrap_'.$year, $num)->result();
 
 		foreach ($list_url as $key => $value)
 		{
