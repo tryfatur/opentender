@@ -780,6 +780,12 @@ class Opentender extends CI_Controller
 
 	//--Begin Part 2--//
 
+	public function monitor()
+	{
+		$data['statistic'] = $this->db->get('v_monitor_statistic')->result();
+		$this->load->view('v_monitor', $data);
+	}
+
 	public function domain_check_new()
 	{
 		$this->db->where('http_code', '301');
