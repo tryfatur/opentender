@@ -811,10 +811,12 @@ class Opentender extends CI_Controller
 	{
 		$num  = $this->input->get('num');
 		$year = $this->input->get('year');
+		$tier = $this->input->get('tier');
 
 		$this->db->select('kd_lelang, link_pengumumanlelang, link_pemenang, link_pemenangberkontrak');
 		$this->db->where('link_pengumumanlelang IS NOT NULL');
 		$this->db->where('link_http_code IS NULL');
+		$this->db->where('tier', $tier);
 		
 		if (isset($num))
 			$this->db->limit($num);
