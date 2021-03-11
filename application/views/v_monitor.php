@@ -35,7 +35,7 @@
 						<td><?php echo date('d M Y, H:i', strtotime($value->last_update)) ?></td>
 						<td>
 						<?php if (($value->years > 2010) AND ($value->years < 2019)): ?>
-							<a href="<?php echo base_url('index.php/opentender/monitor/detail/'.$value->year) ?>" class="btn btn-outline-success" target="_blank">
+							<a href="<?php echo base_url('index.php/opentender/monitor/detail/'.$value->years) ?>" class="btn btn-outline-success" target="_blank">
 								Detail Statistic
 							</a>
 						<?php endif ?>
