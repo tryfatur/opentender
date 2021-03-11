@@ -780,9 +780,13 @@ class Opentender extends CI_Controller
 
 	//--Begin Part 2--//
 
-	public function monitor()
+	public function monitor($page = null, $year = null)
 	{
-		$data['statistic'] = $this->db->get('v_monitor_statistic')->result();
+		if ($page == 'detail')
+			$data['detail_stats'] = $this->db->get('v_detail_monitor_'.$year)->result();
+		else
+			$data['statistic'] = $this->db->get('v_monitor_statistic')->result();
+
 		$this->load->view('v_monitor', $data);
 	}
 

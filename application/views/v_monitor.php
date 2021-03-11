@@ -12,6 +12,7 @@
 	</head>
 	<body>
 		<div class="container">
+		<?php if (isset($statistic)): ?>
 			<h1>Open Tender Rescrapping Monitor</h1>
 			<table class="table table-striped">
 				<thead>
@@ -32,11 +33,51 @@
 						<td><?php echo $value->completed ?></td>
 						<td><?php echo number_format($value->percentage*100, 2) ?>%</td>
 						<td><?php echo date('d M Y, H:i', strtotime($value->last_update)) ?></td>
+						<td>
+						<?php if (($value->years > 2010) AND ($value->years < 2019)): ?>
+							<a href="<?php echo base_url('index.php/opentender/monitor/detail/'.$value->year) ?>" class="btn btn-outline-success" target="_blank">
+								Detail Statistic
+							</a>
+						<?php endif ?>
+						</td>
 					</tr>
 				<?php $i++; ?>
 				<?php endforeach ?>
 				</tbody>
 			</table>
+		<?php else: ?>
+			<h1>Open Tender Rescrapping Monitor Detail</h1>
+			<table class="table table-striped">
+				<thead>
+					<th>#</th>
+					<th>Tier</th>
+					<th>Total Data</th>
+					<th>Target</th>
+					<th>Scrapped</th>
+					<th>Missing Link</th>
+					<th>Response Success</th>
+					<th>Response Failed</th>
+					<th>Avg. Execution Time (Sec)</th>
+				</thead>
+				<tbody>
+				<?php $i = 1; ?>
+				<?php foreach ($detail_stats as $key => $value): ?>
+					<tr>
+						<td><?php echo $i; ?></td>
+						<td><?php echo $value->tier ?></td>
+						<td><?php echo $value->total_data ?></td>
+						<td><?php echo $value->target ?></td>
+						<td><?php echo $value->scrapped ?></td>
+						<td><?php echo $value->missing_link ?></td>
+						<td><?php echo $value->response_success ?></td>
+						<td><?php echo $value->response_failed ?></td>
+						<td><?php echo $value->avg_execution_time ?></td>
+					</tr>
+				<?php $i++; ?>
+				<?php endforeach ?>
+				</tbody>
+			</table>
+		<?php endif ?>
 			<hr>
 			<div class="float-right">
 				<small class="text-muted">
@@ -51,12 +92,5 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
-		<!-- Option 2: Separate Popper and Bootstrap JS -->
-		<!--
-			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-		-->
 	</body>
 </html>
