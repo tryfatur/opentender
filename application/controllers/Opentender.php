@@ -875,20 +875,22 @@ class Opentender extends CI_Controller
 			$tier      = $result->tier;
 			$next_tier = $tier+1;
 
-			$this->db->select('tier, target, scrapped');
-			$this->db->where('tier', $tier);
-			$data = $this->db->get('v_detail_monitor_2015')->row();
+			if ($next_tier <= 28)
+			{
+				$this->db->select('tier, target, scrapped');
+				$this->db->where('tier', $tier);
+				$data = $this->db->get('v_detail_monitor_2015')->row();
 
-			$last_scrapped    = $result->scrapped;
-			$percent_scrapped = $data->scrapped/$data->target;
-			$interval         = $interval;
+				$last_scrapped    = $result->scrapped;
+				$percent_scrapped = $data->scrapped/$data->target;
 
-			if ($percent_scrapped < 1)
-				$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$tier;
-			else
-				$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$next_tier;
+				if ($percent_scrapped < 1)
+					$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$tier;
+				else
+					$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$next_tier;
 
-			shell_exec($cmd);
+				shell_exec($cmd);
+			}
 		}
 	}
 }
