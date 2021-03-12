@@ -889,7 +889,7 @@ class Opentender extends CI_Controller
 				else
 					$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$next_tier;
 
-				shell_exec($cmd);
+				echo shell_exec($cmd);
 			}
 		}
 	}
