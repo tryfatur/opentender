@@ -862,6 +862,35 @@ class Opentender extends CI_Controller
 
 		$this->output->set_content_type('application/json')->set_output(json_encode($result_data));
 	}
+
+	public function autoloop()
+	{
+		$this->db->select('id, kd_lelang, scrapped, tier');
+		$this->db->order_by('scrapped', 'desc');
+		$result = $this->db->get('lelang_rescrap_2015', 1)->row();
+
+		$interval  = (strtotime(date('Y-m-d H:i:s')) - strtotime($result->scrapped))/60;
+		if ($interval >= 5)
+		{
+			$tier      = $result->tier;
+			$next_tier = $tier+1;
+
+			$this->db->select('tier, target, scrapped');
+			$this->db->where('tier', $tier);
+			$data = $this->db->get('v_detail_monitor_2015')->row();
+
+			$last_scrapped    = $result->scrapped;
+			$percent_scrapped = $data->scrapped/$data->target;
+			$interval         = $interval;
+
+			if ($percent_scrapped < 1)
+				$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$tier;
+			else
+				$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$next_tier;
+
+			shell_exec($cmd);
+		}
+	}
 }
 
 /* End of file Opentender.php */
