@@ -885,9 +885,9 @@ class Opentender extends CI_Controller
 				$percent_scrapped = $data->scrapped/$data->target;
 
 				if ($percent_scrapped < 1)
-					$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$tier;
+					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier=".$tier."'";
 				else
-					$cmd = 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier='.$next_tier;
+					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier=".$next_tier."'";
 
 				echo shell_exec($cmd);
 			}
