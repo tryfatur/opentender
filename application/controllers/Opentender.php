@@ -870,9 +870,16 @@ class Opentender extends CI_Controller
 
 	public function autoloop()
 	{
+		$year = $this->input->get('year');
+
 		$this->db->select('id, kd_lelang, scrapped, tier');
 		$this->db->order_by('scrapped', 'desc');
-		$result = $this->db->get('lelang_rescrap_2015', 1)->row();
+		$result = $this->db->get('lelang_rescrap_'.$year, 1)->row();
+
+		$this->db->select('tier');
+		$this->db->order_by('tier', 'desc');
+		$this->db->distinct();
+		$max_tier = $this->db->get('lelang_rescrap_'.$year, 1)->row();
 
 		$interval  = (strtotime(date('Y-m-d H:i:s')) - strtotime($result->scrapped))/60;
 		if ($interval >= 5)
@@ -880,19 +887,19 @@ class Opentender extends CI_Controller
 			$tier      = $result->tier;
 			$next_tier = $tier+1;
 
-			if ($next_tier <= 28)
+			if ($next_tier <= $max_tier->tier)
 			{
 				$this->db->select('tier, target, scrapped');
 				$this->db->where('tier', $tier);
-				$data = $this->db->get('v_detail_monitor_2015')->row();
+				$data = $this->db->get('v_detail_monitor_'.$year)->row();
 
 				$last_scrapped    = $result->scrapped;
 				$percent_scrapped = $data->scrapped/$data->target;
 
 				if ($percent_scrapped < 1)
-					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier=".$tier."'";
+					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=".$year."&tier=".$tier."'";
 				else
-					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=2015&tier=".$next_tier."'";
+					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=".$year."&tier=".$next_tier."'";
 
 				echo shell_exec($cmd);
 			}
