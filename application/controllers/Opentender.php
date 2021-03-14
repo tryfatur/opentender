@@ -871,6 +871,7 @@ class Opentender extends CI_Controller
 	public function autoloop()
 	{
 		$year = $this->input->get('year');
+		$debug = $this->input->get('debug');
 
 		$this->db->select('id, kd_lelang, scrapped, tier');
 		$this->db->where('link_http_code IS NOT NULL');
@@ -903,7 +904,10 @@ class Opentender extends CI_Controller
 				else
 					$cmd = "curl --request GET 'http://localhost/index.php/opentender/rescrap_new?year=".$year."&tier=".$next_tier."'";
 
-				echo shell_exec($cmd);
+				if (!isset($debug))
+					echo shell_exec($cmd);
+				else
+					echo $cmd;
 			}
 		}
 	}
