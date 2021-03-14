@@ -873,6 +873,8 @@ class Opentender extends CI_Controller
 		$year = $this->input->get('year');
 
 		$this->db->select('id, kd_lelang, scrapped, tier');
+		$this->db->where('link_http_code IS NOT NULL');
+		$this->db->order_by('tier', 'desc');
 		$this->db->order_by('scrapped', 'desc');
 		$result = $this->db->get('lelang_rescrap_'.$year, 1)->row();
 
