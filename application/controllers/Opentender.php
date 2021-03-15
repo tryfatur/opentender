@@ -850,7 +850,7 @@ class Opentender extends CI_Controller
 				$time_end = microtime(true);
 				$result_data['execution_time'] = $time_end - $time_start;
 
-				$this->db->insert('lelang_rescrap_result', $result_data);
+				$this->db->insert('lelang_rescrap_result_'.$year, $result_data);
 
 				sleep(0.05);
 			}
