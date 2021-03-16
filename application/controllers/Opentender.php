@@ -792,7 +792,9 @@ class Opentender extends CI_Controller
 
 	public function domain_check_new()
 	{
-		$this->db->where('http_code', '301');
+		$http_code = $this->input->get('http_code');
+		
+		$this->db->where('http_code', $http_code);
 		$this->db->select('id_record, url');
 		$result = $this->db->get('domain_check')->result();
 
