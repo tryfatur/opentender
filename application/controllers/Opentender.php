@@ -827,7 +827,7 @@ class Opentender extends CI_Controller
 			$this->db->where('tier', $tier);
 
 		if (isset($retry) AND ($retry == true))
-			$this->db->where('link_http_code', 0);
+			$this->db->where('link_http_code = 0 OR (link_http_code IS NULL AND link_pengumumanlelang IS NOT NULL)');
 		else
 			$this->db->where('link_http_code IS NULL');
 		
